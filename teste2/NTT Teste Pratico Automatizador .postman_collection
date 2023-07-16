@@ -59,7 +59,6 @@
 						"exec": [
 							"// Extrair o valor do CEP da variável de ambiente\r",
 							"var cep = pm.environment.get(\"cep\");\r",
-							"cep = '38408254';\r",
 							"console.log(\"CEP: \" + cep);\r",
 							"\r",
 							"// Construir o corpo da solicitação SOAP\r",
