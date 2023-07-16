@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "22695c4d-46e2-479d-935f-412c6d0af26b",
+		"name": "NTT Teste Pratico Automatizador ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Função para extrair o valor de um elemento XML a partir de uma string XML\r",
+							"function extractElementValue(xmlString, elementName) {\r",
+							"    var startIndex = xmlString.indexOf(\"<\" + elementName + \">\") + elementName.length + 2;\r",
+							"    var endIndex = xmlString.indexOf(\"</\" + elementName + \">\");\r",
+							"    if (endIndex == -1){\r",
+							"        return \"\";\r",
+							"    }\r",
+							"    return xmlString.substring(startIndex, endIndex).trim();\r",
+							"}\r",
+							"\r",
+							"// Validar os campos de retorno da API dos Correios\r",
+							"pm.test(\"Campos de retorno não podem ser vazios\", function () {\r",
+							"\r",
+							"    var responseXml = pm.response.text();\r",
+							"    console.log(\"Response XML: \" + responseXml);\r",
+							"\r",
+							"    var bairro = extractElementValue(responseXml, \"bairro\");\r",
+							"    var cep = extractElementValue(responseXml, \"cep\");\r",
+							"    var cidade = extractElementValue(responseXml, \"cidade\");\r",
+							"    var complemento2 = extractElementValue(responseXml, \"complemento2\");\r",
+							"    var end = extractElementValue(responseXml, \"end\");\r",
+							"    var uf = extractElementValue(responseXml, \"uf\");\r",
+							"\r",
+							"    console.log(\"Bairro: \" + bairro);\r",
+							"    console.log(\"CEP: \" + cep);\r",
+							"    console.log(\"Cidade: \" + cidade);\r",
+							"    console.log(\"Complemento2: \" + complemento2);\r",
+							"    console.log(\"Endereço: \" + end);\r",
+							"    console.log(\"UF: \" + uf);\r",
+							"\r",
+							"    pm.expect(bairro).to.not.be.empty;\r",
+							"    pm.expect(cep).to.not.be.empty;\r",
+							"    pm.expect(cidade).to.not.be.empty;\r",
+							"    pm.expect(end).to.not.be.empty;\r",
+							"    pm.expect(uf).to.not.be.empty;\r",
+							"    \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Extrair o valor do CEP da variável de ambiente\r",
+							"var cep = pm.environment.get(\"cep\");\r",
+							"cep = '38408254';\r",
+							"console.log(\"CEP: \" + cep);\r",
+							"\r",
+							"// Construir o corpo da solicitação SOAP\r",
+							"var requestXml = `\r",
+							"    <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cli=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\">\r",
+							"        <soapenv:Header/>\r",
+							"        <soapenv:Body>\r",
+							"            <cli:consultaCEP>\r",
+							"                <cep>${cep}</cep>\r",
+							"            </cli:consultaCEP>\r",
+							"        </soapenv:Body>\r",
+							"    </soapenv:Envelope>\r",
+							"`;\r",
+							"console.log(\"Request XML: \" + requestXml);\r",
+							"\r",
+							"// Definir as configurações da solicitação\r",
+							"pm.request.body = requestXml;\r",
+							"pm.request.headers.add({ key: 'Content-Type', value: 'text/xml' });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente",
+					"protocol": "https",
+					"host": [
+						"apps",
+						"correios",
+						"com",
+						"br"
+					],
+					"path": [
+						"SigepMasterJPA",
+						"AtendeClienteService",
+						"AtendeCliente"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "name_detail",
+			"value": ""
+		}
+	]
+}
