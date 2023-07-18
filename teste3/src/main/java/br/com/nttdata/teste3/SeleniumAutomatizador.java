@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 
+import java.io.File;
 import java.util.List;
 
 public class SeleniumAutomatizador {
@@ -285,9 +286,13 @@ public class SeleniumAutomatizador {
     }
 
     private WebDriver getWebDriver() {
-        System.setProperty("webdriver.edge.driver", "C:\\Users\\gsilvcor\\IdeaProjects\\msedgedriver.exe");
+        ClassLoader classLoader = getClass().getClassLoader();
+        File driverFile = new File(classLoader.getResource("msedgedriver.exe").getFile());
+        System.setProperty("webdriver.edge.driver", driverFile.getAbsolutePath());
 
         WebDriver driver = new EdgeDriver();
+
+        driver.manage().window().maximize();
 
         driver.get("https://advantageonlineshopping.com");
         return driver;
