@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DBConnect {
 
     private static final String URL = "jdbc:mysql://localhost:3306/banco_teste_automacao";
-    private static final String USER = "root"; // Substitua pelo seu usuário
-    private static final String PASSWORD = "Gab13579."; // Substitua pela sua senha
+    private static final String USER = "**USUÁRIO**"; // Substitua pelo seu usuário
+    private static final String PASSWORD = "**SENHA**"; // Substitua pela sua senha
 
     public static Connection getConnection() throws SQLException {
         try {
