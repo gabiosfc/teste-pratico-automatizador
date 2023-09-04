@@ -1,6 +1,18 @@
 package br.com.nttdata.teste3;
 
-public class Massas {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import java.io.Serializable;
+
+@Entity
+public class Massas implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long IDMASSAS;
 
     private String NAME_PRODUCT;
     private String CUSTOMIZATION;
@@ -13,6 +25,14 @@ public class Massas {
     private String TOUCHSCREEN;
     private String WEIGHT;
     private String COLOR;
+
+    public Long getIDMASSAS() {
+        return IDMASSAS;
+    }
+
+    public void setIDMASSAS(Long IDMASSAS) {
+        this.IDMASSAS = IDMASSAS;
+    }
 
     public String getNAME_PRODUCT() {
         return NAME_PRODUCT;
